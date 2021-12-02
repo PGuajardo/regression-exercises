@@ -25,7 +25,7 @@ def get_zillow_data():
 # Wrangle the data for zillow
 def wrangle_data(df):
     # Replace any white spaces with a null
-    df = df.replace(r'^\s*$', np.nan, regex=True)
+    # df = df.replace(r'^\s*$', np.nan, regex=True)
 
     # Drop all null values
     df = df.dropna()
