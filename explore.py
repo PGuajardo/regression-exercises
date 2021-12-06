@@ -23,14 +23,13 @@ def plot_variable_pairs(df):
 '''
 Creates Lmplot, jointplot, and relplot, modified for zillow data
 '''
-def plot_categorical_and_continuous_vars(df):
+def plot_categorical_and_continuous_vars(df, x_var, list_of_features):
     #the name of the columns that hold the continuous and categorical features and outputs 3 different plots 
     #for visualizing a categorical variable and a continuous variable
-    con_cat_features = df[['age', 'area', 'bedrooms', 'bathrooms']]
     
-    for i, col in enumerate(con_cat_features):
+    for i, col in enumerate(list_of_features):
         # i starts at 0, but plot should start at 1
-        plot_number = i + 1 
+        #plot_number = i + 1 
 
         # Create subplot.
         #plt.subplot(1, len(con_cat_features), plot_number)
@@ -39,12 +38,12 @@ def plot_categorical_and_continuous_vars(df):
         #plt.title(col)
 
         # Scatter Plot
-        sns.lmplot(x= 'taxamount', y= col, data=train, line_kws={'color': 'red'})
+        sns.lmplot(x= x_var, y= col, data=df, line_kws={'color': 'red'})
         
         # Joint Plot
-        sns.jointplot(x= 'taxamount', y= col , data = train, kind='reg')
+        sns.jointplot(x= x_var, y= col , data = df, kind='reg')
         
-        sns.relplot(x = 'taxamount', y = col, data = train, kind='scatter')
+        sns.relplot(x = x_var, y = col, data = df, kind='scatter')
         # Hide gridlines.
         plt.grid(False)
 
@@ -67,5 +66,12 @@ def yearbuilt_years(df):
     df['age'] = year - df.year_built
     # dropping the 'yearbuilt' column now that i have the age
     df = df.drop(columns=['year_built'])
+    
+    return df
+
+
+def months_to_years(df, column):
+    
+    df[column] = df[column] / 12
     
     return df
