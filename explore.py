@@ -22,6 +22,11 @@ def plot_variable_pairs(df):
 
 '''
 Creates Lmplot, jointplot, and relplot, modified for zillow data
+
+Needs a dataframe
+Needs a ur x_var (ur target vairable) EX: 'score' or 'taxamount'
+Needs a list of feautures from data set you are using (NO CATEGORICALS) EX: df_features = df[['age', 'money', 'height']]
+Outputs 3 charts for each feature
 '''
 def plot_categorical_and_continuous_vars(df, x_var, list_of_features):
     #the name of the columns that hold the continuous and categorical features and outputs 3 different plots 
@@ -70,6 +75,9 @@ def yearbuilt_years(df):
     return df
 
 
+'''
+Converts month to year
+'''
 def months_to_years(df, column):
     
     df[column] = df[column] / 12
