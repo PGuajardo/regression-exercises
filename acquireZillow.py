@@ -107,23 +107,27 @@ def prepare_zillow(df):
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------------------
 
-def zillow_scaler(train, validate, test):
+def zillow_scaler(train, validate, test): #X_train , X_validate, X_test
 
     # 1. create the object
     scaler_min_max = sklearn.preprocessing.MinMaxScaler()
 
     # 2. fit the object (learn the min and max value)
-    scaler_min_max.fit(train[['bedrooms', 'taxamount']])
+    # train[['bedrooms', 'taxamount']]
+    scaler_min_max.fit(X_train)
 
     # 3. use the object (use the min, max to do the transformation)
-    scaled_bill = scaler_min_max.transform(train[['bedrooms', 'taxamount']])
+    # train[['bedrooms', 'taxamount']]
+    scaled_bill = scaler_min_max.transform(X_train)
 
     train[['bedrooms_scaled', 'taxamount_scaled']] = scaled_bill
     # Create them on the test and validate
-    test[['bedrooms_scaled', 'taxamount_scaled']] = scaler_min_max.transform(test[['bedrooms', 'taxamount']])
-    validate[['bedrooms_scaled', 'taxamount_scaled']] = scaler_min_max.transform(validate[['bedrooms', 'taxamount']])
+    # test[['bedrooms', 'taxamount']]
+    test[['bedrooms_scaled', 'taxamount_scaled']] = scaler_min_max.transform(X_test)
+    # validate[['bedrooms', 'taxamount']]
+    validate[['bedrooms_scaled', 'taxamount_scaled']] = scaler_min_max.transform(X_validate)
 
-    return train, validate, test
+    return train, validate, test #X_train, X_validate, X_test
 
 
 #--------------------------------------------------------------------------------------------------------------------------------
