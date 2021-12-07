@@ -6,6 +6,7 @@ plot_residuals(y, yhat): creates a residual plot
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 from math import sqrt
+from scipy.stats import linregress
 
 def plot_residuals(y, yhat):
 
@@ -80,3 +81,10 @@ def better_than_baseline(y, yhat):
         return print('The y model performs better than yhat!')
     else:
         return print('THe model does not perform better than baseline!! Back to the drawing board!!!')
+
+
+# Outputs R^2 value and P-value to test for correlation signifcance and if there is a relationship
+
+def rval_p_significance(y, yhat):
+    results = linregress(y, yhat)
+    return f'P-Value : {results.pvalue} *****   R^2 Value: {(results.rvalue)**2}'
