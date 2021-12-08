@@ -9,15 +9,15 @@ from math import sqrt
 from scipy.stats import linregress
 
 def plot_residuals(y, yhat):
-
     residuals = y - yhat
     plt.figure(figsize = (11,5))
-
+    plt.hlines(0, y.min(), yhat.max(), ls = ':')
     plt.scatter(y, residuals)
     plt.axhline(y = 0, ls = ':')
-    plt.xlabel('y')
-    plt.ylabel('residual')
-    plt.title('Residuals')
+    plt.xlabel('Actual')
+    plt.ylabel('Residual')
+    plt.title('Actual VS Residual')
+    plt.show();
 
 
 '''
@@ -52,6 +52,11 @@ def regression_errors(y, yhat):
     ESS = TSS - SSE
 
     return SSE, ESS, TSS, MSE, RMSE
+    '''
+    pd.Series({'sse' : SSE,
+    'ess': ESS ,
+    })
+    '''
 
 
 # baseline_mean_errors(y): computes the SSE, MSE, and RMSE for the baseline model
@@ -73,14 +78,18 @@ def baseline_mean_errors(y):
 
 
     return SSE_baseline, MSE_baseline, RMSE_baseline
-
+    '''
+    {
+        'sse' : SSE # etc
+    }
+    '''
 
 # better_than_baseline(y, yhat): returns true if your model performs better than the baseline, otherwise false
 def better_than_baseline(y, yhat):
-    if y < yhat:
-        return print('The y model performs better than yhat!')
-    else:
-        return print('THe model does not perform better than baseline!! Back to the drawing board!!!')
+    #results = regression_errors(y, yhat)
+    #basline_results = baseline_mean_errors(y,yhat)
+    # If the model is less than baseline then it is a better model, if not we dont need this model
+    return y < yhat#results[4] < basline_results[2]
 
 
 # Outputs R^2 value and P-value to test for correlation signifcance and if there is a relationship
@@ -88,3 +97,10 @@ def better_than_baseline(y, yhat):
 def rval_p_significance(y, yhat):
     results = linregress(y, yhat)
     return f'P-Value : {results.pvalue} *****   R^2 Value: {(results.rvalue)**2}'
+    '''
+    pd.series({
+
+        'P-Value' : results.pvale,
+        'R-Value' : results.rvalue**2,
+    })
+    '''
